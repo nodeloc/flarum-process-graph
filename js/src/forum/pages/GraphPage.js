@@ -112,7 +112,7 @@ export default class AuthorizedPage extends UserPage {
         textStyle:{
           fontWeight: 'normal',
           fontSize: 18,
-          color:'#FF974C',
+          color:'#009966',
           align:'center',
           left:10
         },
@@ -152,7 +152,7 @@ export default class AuthorizedPage extends UserPage {
               value: this.commentCount,
               selected:false,
               itemStyle: {
-                color: "#FF974C",
+                color: "#009966",
               },
             },
             {
@@ -182,7 +182,7 @@ export default class AuthorizedPage extends UserPage {
         textStyle:{
           fontWeight: 'normal',
           fontSize: 18,
-          color:'#FF974C',
+          color:'#009966',
           align:'center',
         },
         subtextStyle:{
@@ -221,7 +221,7 @@ export default class AuthorizedPage extends UserPage {
               value: this.discussionCount,
               selected:false,
               itemStyle: {
-                color: "#FF974C",
+                color: "#009966",
               },
             },
             {
@@ -251,7 +251,7 @@ export default class AuthorizedPage extends UserPage {
         textStyle:{
           fontWeight: 'normal',
           fontSize: 18,
-          color:'#FF974C',
+          color:'#009966',
           align:'center',
         },
         subtextStyle:{
@@ -290,7 +290,7 @@ export default class AuthorizedPage extends UserPage {
               value: this.user_help_count,
               selected:false,
               itemStyle: {
-                color: "#FF974C",
+                color: "#009966",
               },
             },
             {
@@ -320,7 +320,7 @@ export default class AuthorizedPage extends UserPage {
         textStyle:{
           fontWeight: 'normal',
           fontSize: 18,
-          color:'#FF974C',
+          color:'#009966',
           align:'center',
         },
         subtextStyle:{
@@ -359,7 +359,7 @@ export default class AuthorizedPage extends UserPage {
               value: this.user_lottery_count,
               selected:false,
               itemStyle: {
-                color: "#FF974C",
+                color: "#009966",
               },
             },
             {
