@@ -1,9 +1,9 @@
-foskym-activity-graph:
+nodeloc-process-graph:
   admin:
 
   forum:
     label:
-      activity_graph: Activity Graph
-      total_times: Total {total} times in this year
+      process_graph: Upgrade Graph
+      total_times: Current read permission {total}
       unit: times
       name_map: en # Lang of label. See more on https://echarts.apache.org/en/option.html#calendar.dayLabel.nameMap

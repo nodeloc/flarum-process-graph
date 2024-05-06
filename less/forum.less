@@ -1,0 +1,18 @@
+.process-graph-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.process-graph-item {
+  width: 50%;
+}
+
+/* 在移动端将每个图形容器的宽度设置为100% */
+@media screen and (max-width: 768px) {
+  .process-graph-container {
+    display: block;
+  }
+  .process-graph-item {
+    width: 100%;
+  }
+}

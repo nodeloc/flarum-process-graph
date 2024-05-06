@@ -1,15 +1,7 @@
 <?php
 
-/*
- * This file is part of foskym/flarum-activity-graph.
- *
- * Copyright (c) 2024 FoskyM.
- *
- * For the full copyright and license information, please view the LICENSE.md
- * file that was distributed with this source code.
- */
 
-namespace FoskyM\ActivityGraph;
+namespace Nodeloc\ProcessGraph;
 
 use Flarum\Extend;
 use Flarum\Frontend\Document;
@@ -20,7 +12,13 @@ return [
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/less/forum.less')
         ->content(function (Document $document, Request $request) {
-            $document->head[] = '<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>';
+            // 检查当前路由是否是插件定义的路由
+            $requestUri = $request->getUri()->getPath();
+            $routeName = $request->getAttribute('routeName');
+            if (strpos($requestUri, '/process-graph') !== false) {
+                // 如果是插件定义的路由，则添加 JavaScript 引用
+                $document->head[] = '<script src="https://fastly.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>';
+            }
         }),
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
@@ -28,5 +26,5 @@ return [
     new Extend\Locales(__DIR__.'/locale'),
 
     (new Extend\Routes('api'))
-        ->get('/activity-graph', 'activity-graph', Controllers\ApiActivityGraphController::class)
+        ->get('/process-graph', 'process-graph', Controllers\ApiProcessGraphController::class)
 ];

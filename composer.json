@@ -1,5 +1,5 @@
 {
-    "name": "foskym/flarum-activity-graph",
+    "name": "nodeloc/flarum-process-graph",
     "description": "Show an activity graph in user page",
     "keywords": [
         "flarum",
@@ -14,23 +14,23 @@
     },
     "authors": [
         {
-            "name": "FoskyM",
-            "email": "i@fosky.top",
+            "name": "James",
+            "email": "james@nodeloc.com",
             "role": "Developer",
-            "homepage": "https://fosky.top"
+            "homepage": "https://www.nodeloc.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "FoskyM\\ActivityGraph\\": "src/"
+            "Nodeloc\\ProcessGraph\\": "src/"
         }
     },
     "extra": {
         "flarum-extension": {
-            "title": "Activity Graph",
+            "title": "Process Graph",
             "category": "",
             "icon": {
-                "name": "fas fa-chart-line",
+                "name": "far fa-arrow-alt-circle-up",
                 "color": "#fff",
                 "backgroundColor": "#70abfa"
             }
@@ -58,7 +58,7 @@
     "prefer-stable": true,
     "autoload-dev": {
         "psr-4": {
-            "FoskyM\\ActivityGraph\\Tests\\": "tests/"
+            "Nodeloc\\ProcessGraph\\Tests\\": "tests/"
         }
     },
     "scripts": {

@@ -1,9 +1,9 @@
-foskym-activity-graph:
+nodeloc-process-graph:
   admin:
 
   forum:
     label:
-      activity_graph: 活动图表
-      total_times: 这一年共 {total} 次
+      process_graph: 升级进度
+      total_times: 当前阅读权限 {total}
       unit: 次
       name_map: cn # 标签语言. 可查询 https://echarts.apache.org/zh/option.html#calendar.dayLabel.nameMap
