@@ -4,10 +4,10 @@
     "version": "0.0.0",
     "devDependencies": {
         "@flarum/prettier-config": "^1.0.0",
+        "echarts": "5.5.0",
         "flarum-tsconfig": "^1.0.2",
         "flarum-webpack-config": "^2.0.0",
         "prettier": "^2.5.1",
-        "echarts":"5.5.0",
         "typescript": "^4.5.4",
         "typescript-coverage-report": "^0.6.1",
         "webpack": "^5.65.0",
@@ -25,5 +25,8 @@
         "check-typings": "tsc --noEmit --emitDeclarationOnly false",
         "check-typings-coverage": "typescript-coverage-report"
     },
-    "prettier": "@flarum/prettier-config"
+    "prettier": "@flarum/prettier-config",
+    "dependencies": {
+        "@nodeloc/flarum-process-graph": "file:"
+    }
 }

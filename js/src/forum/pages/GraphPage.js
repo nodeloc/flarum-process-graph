@@ -8,28 +8,15 @@ export default class AuthorizedPage extends UserPage {
   graphData = null;
   graph = null;
   resize_handler_bound = false;
-  read_permission = app.session.user.attribute("read_permission");
-  discussionCount = app.session.user.attribute("discussionCount");
-  commentCount =  app.session.user.attribute("commentCount");
-  user_help_count = app.session.user.attribute("bestAnswerCount");
-  upgrade_help_count = 20;
-  left_help_count = this.upgrade_help_count-this.user_help_count > 0 ? this.upgrade_help_count-this.user_help_count : 0;
-  user_lottery_count =0;
-  upgrade_lottery_count = 10;
-  level =0;
-  userLevel = 0;
-  nextLevel = "";
-  nextPermission = 0;
-  discussionUpgradeInfo  = {};
-  count_help = 0;
-  count_lottery =0;
+
   upgrade_info = [
-    { gid: 19, discussion_start: 5, post_count: 10 ,read_permission :0},
+    { gid: 19, discussion_start: 5, post_count: 10 ,read_permission :10},
     { gid: 20, discussion_start: 10, post_count: 50 ,read_permission :20},
     { gid: 21, discussion_start: 50, post_count: 100 ,read_permission :50},
-    { gid: 22, discussion_start: 60, post_count: 60,read_permission :100 },
-    { gid: 23, discussion_start: 200, post_count: 500,read_permission :120 },
-    { gid: 24, discussion_start: 500, post_count: 1000 ,read_permission :500}
+    { gid: 22, discussion_start: 100, post_count: 200,read_permission :100 },
+    { gid: 23, discussion_start: 200, post_count: 500,read_permission :150 },
+    { gid: 24, discussion_start: 500, post_count: 1000 ,read_permission :200},
+    { gid: 25, discussion_start: 10000, post_count: 100000 ,read_permission :666}
   ];
   options = {
     19: '青铜会员',
@@ -37,13 +24,29 @@ export default class AuthorizedPage extends UserPage {
     21: '黄金会员',
     22: '钻石会员',
     23: '王者会员',
-    24: '宗师会员'
+    24: '宗师会员',
+    25: '神仙会员'
   };
   oninit(vnode) {
     super.oninit(vnode);
     this.loadUser(m.route.param('username'));
+    this.read_permission = this.user.attribute("read_permission");
+    this.discussionCount = this.user.attribute("discussionCount");
+    this.commentCount =  this.user.attribute("commentCount");
+    this.user_help_count = this.user.attribute("bestAnswerCount");
+    this.upgrade_help_count = 20;
+    this.left_help_count = this.upgrade_help_count-this.user_help_count > 0 ? this.upgrade_help_count-this.user_help_count : 0;
+    this.user_lottery_count = this.user.attribute("lotteryCount");
+    this.upgrade_lottery_count = 20;
+    this.level =0;
+    this.userLevel = 0;
+    this.nextLevel = "";
+    this.nextPermission = 0;
+    this.discussionUpgradeInfo  = {};
+    this.count_help = 0;
+    this.count_lottery =0;
     this.userLevel = this.determineMembershipLevel(this.discussionCount, this.commentCount);
-    this.discussionUpgradeInfo = this.findUpgradeInfo(this.userLevel);
+    this.discussionUpgradeInfo = this.userLevel===0? this.upgrade_info[0]: this.findUpgradeInfo(this.userLevel);
     this.nextLevel = this.options[this.discussionUpgradeInfo['gid']];
     this.nextPermission=this.discussionUpgradeInfo['read_permission'];
 
@@ -60,7 +63,6 @@ export default class AuthorizedPage extends UserPage {
       params: {user_id: this.user.id()},
     }).then(result => {
       this.loading = false;
-      this.user_lottery_count = result.total;
       m.redraw();
       this.renderGraph();
     });
@@ -88,7 +90,7 @@ export default class AuthorizedPage extends UserPage {
     let leftDiscussionData, leftCommentData;
     if (this.level && this.options[this.level]) {
       // 如果 Select 有值，则使用 Select 的值
-      let selectedUpgradeInfo = this.findUpgradeInfo(this.level);
+      let selectedUpgradeInfo = this.findCurrentInfo(this.level);
       leftDiscussionData = selectedUpgradeInfo['discussion_start'] - this.discussionCount > 0 ? selectedUpgradeInfo['discussion_start'] - this.discussionCount : 0;
       leftCommentData = selectedUpgradeInfo['post_count'] - this.commentCount > 0 ? selectedUpgradeInfo['post_count'] - this.commentCount : 0;
     } else {
@@ -392,18 +394,23 @@ export default class AuthorizedPage extends UserPage {
   }
 
   determineMembershipLevel(discussionCount, commentCount) {
-    let totalPosts = discussionCount + commentCount;
     for (let i = this.upgrade_info.length - 1; i >= 0; i--) {
-      let levelInfo = this.upgrade_info[i];
-      if (totalPosts >= levelInfo.discussion_start) {
-        return levelInfo.gid;
-      }
+        let levelInfo = this.upgrade_info[i];
+        if (discussionCount >= levelInfo.discussion_start && commentCount >= levelInfo.post_count) {
+            return levelInfo.gid;
+        }
     }
     return 0; // User is below the lowest membership level
   }
-
-  findUpgradeInfo(level) {
+  findCurrentInfo(level) {
     return this.upgrade_info.find(info => info.gid == level);
+  }
+  findUpgradeInfo(currentLevel) {
+    let currentIndex = this.upgrade_info.findIndex(info => info.gid == currentLevel);
+    if (currentIndex >= 0 && currentIndex < this.upgrade_info.length - 1) {
+        return this.upgrade_info[currentIndex + 1];
+    }
+    return null; // If the current level is the highest or not found, return null
   }
   content() {
     return <div className="process-graph-page">
